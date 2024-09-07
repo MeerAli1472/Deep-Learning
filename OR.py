@@ -1,27 +1,34 @@
 from utils.all_utils import prepare_data, save_plot
 from utils.model import Perceptron
 import pandas as pd
-#Data for OR Gate
-OR = {
-    "x1":[0,0,1,1],
-    "x2":[0,1,0,1],
-   "y":  [0,1,1,1]
-}
-# DataFrame of OR data
-df_OR = pd.DataFrame(OR)
+
+def main(data,modelName,plotName,eta,epochs):
+    # DataFrame of OR data
+    df_OR = pd.DataFrame(data)
+
+    #prepare data for Training
+    X,y = prepare_data(df_OR)
+
+    model_OR = Perceptron(eta =eta, epochs = epochs)
+    model_OR.fit(X,y)
+    _ = model_OR.total_loss()
+    model_OR.save(filename=modelName, model_dir="model")
+
+    #Save plot
+    save_plot(df_OR,model_OR,filename=plotName)
 
 
-#prepare data for Training
-X,y = prepare_data(df_OR)
+if __name__ == "__main__":
 
-ETA = 0.1
-EPOCHS = 10
+    #Data for OR Gate
+    OR = {
+        "x1":[0,0,1,1],
+        "x2":[0,1,0,1],
+    "y":  [0,1,1,1]
+    }
 
-model_OR = Perceptron(eta = ETA, epochs = EPOCHS)
-model_OR.fit(X,y)
-_ = model_OR.total_loss()
+    ETA = 0.1
+    EPOCHS = 10
 
-model_OR.save(filename="OR.model", model_dir="model_or")
+    main(data=OR,modelName="or.model",plotName="or.png",eta=ETA,epochs=EPOCHS)
 
-#Save plot
-save_plot(df_OR,model_OR,filename="OR.png")
