@@ -9,13 +9,13 @@ def main(data,modelName,plotName,eta,epochs):
     #prepare data for Training
     X,y = prepare_data(df_OR)
 
-    model_OR = Perceptron(eta =eta, epochs = epochs)
-    model_OR.fit(X,y)
-    _ = model_OR.total_loss()
-    model_OR.save(filename=modelName, model_dir="model")
+    model = Perceptron(eta =eta, epochs = epochs)
+    model.fit(X,y)
+    _ = model.total_loss()
+    model.save(filename=modelName, model_dir="model")
 
     #Save plot
-    save_plot(df_OR,model_OR,filename=plotName)
+    save_plot(df_OR,model,filename=plotName)
 
 
 if __name__ == "__main__":
